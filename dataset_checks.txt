@@ -1,0 +1,109 @@
+=== 1. SHAPE (project rules) ===
+Data rows (header excluded): 36664 | >= 15,000: True
+Columns: 14 | >= 10: True
+Duplicate rows: 0
+Duplicate country-crop-year keys: 0
+
+=== 2. COLUMNS, TYPES, MISSING ===
+                           dtype  missing
+record_id                  int64        0
+observation_date  datetime64[ns]        0
+region                    object        0
+crop                      object        0
+rainfall_mm              float64        0
+temperature_c            float64        0
+humidity_pct             float64        0
+soil_moisture            float64        0
+yield_kg                 float64        0
+plot_area_ha             float64        0
+country                   object        0
+iso3                      object        0
+year                       int64        0
+yield_kg_ha              float64        0
+
+=== 3. RANGE CHECKS (violations should be 0) ===
+humidity_pct outside 0-100          0
+soil_moisture outside 0-1           0
+rainfall_mm < 0                     0
+temperature_c outside -60..60       0
+plot_area_ha <= 0                   0
+yield_kg <= 0                       0
+
+=== 4. COVERAGE ===
+Years: 1990 to 2022
+Countries: 194 | Regions: 22
+
+Rows per crop:
+crop
+Maize             5167
+Potatoes          4963
+Wheat             3953
+Rice              3765
+Sweet potatoes    3532
+Sorghum           3400
+Barley            3220
+Cassava           3133
+Soybeans          2986
+Millet            2545
+
+Rows per region:
+region
+Eastern Africa               4176
+Western Africa               3537
+South America                3112
+Western Asia                 2988
+Southern Europe              2220
+Eastern Europe               2181
+Southern Asia                2094
+South-eastern Asia           1982
+Central America              1909
+Middle Africa                1849
+Caribbean                    1792
+Northern Africa              1308
+Eastern Asia                 1287
+Central Asia                 1109
+Western Europe               1108
+Northern Europe              1001
+Southern Africa               949
+Melanesia                     699
+Australia and New Zealand     462
+Northern America              462
+Polynesia                     295
+Micronesia                    144
+
+=== 5. YIELD (kg per hectare) BY CROP - look for silly values ===
+                  min   median       max
+crop                                    
+Barley          114.0   2400.0   14211.7
+Cassava         998.4   9988.0   48921.2
+Maize             0.1   2481.4   39432.4
+Millet           20.0   1000.0   44095.2
+Potatoes        411.7  16100.6   75298.7
+Rice            141.7   3206.3   11383.6
+Sorghum          57.8   1285.4   55981.8
+Soybeans          5.0   1518.6    4420.6
+Sweet potatoes  500.0   8000.0  102655.5
+Wheat           131.4   2403.2   10667.7
+
+Top 10 highest yield_kg_ha rows:
+country           crop  year  yield_kg_ha
+ Guyana Sweet potatoes  2022    102655.51
+ Guyana Sweet potatoes  2016     96041.24
+ Guyana Sweet potatoes  2021     86381.53
+ Guyana Sweet potatoes  2019     83957.49
+ Guyana Sweet potatoes  2020     82338.05
+ Guyana Sweet potatoes  2015     80169.46
+ Kuwait       Potatoes  2015     75298.73
+ Guyana Sweet potatoes  2018     71970.58
+ Guyana Sweet potatoes  2017     65248.89
+ Kuwait       Potatoes  2017     62374.70
+
+=== 6. NUMERIC SUMMARY ===
+                 count          mean           std     min         25%           50%           75%           max
+rainfall_mm    36664.0  9.547100e+02  7.181600e+02    0.00      426.43  8.416500e+02  1.333500e+03  6.989040e+03
+temperature_c  36664.0  1.930000e+01  8.000000e+00   -8.02       12.22  2.247000e+01  2.583000e+01  3.050000e+01
+humidity_pct   36664.0  6.645000e+01  1.735000e+01   18.28       57.86  7.138000e+01  7.916000e+01  9.518000e+01
+soil_moisture  36664.0  5.600000e-01  1.700000e-01    0.09        0.46  5.600000e-01  6.800000e-01  9.900000e-01
+yield_kg       36664.0  2.883229e+09  1.513575e+10  200.00  8666750.00  1.163994e+08  8.730578e+08  4.122622e+11
+plot_area_ha   36664.0  7.225974e+05  3.123005e+06    1.00     2700.00  3.527800e+04  2.136925e+05  4.644912e+07
+yield_kg_ha    36664.0  6.239850e+03  7.720930e+03    0.13     1478.55  3.061910e+03  7.785100e+03  1.026555e+05

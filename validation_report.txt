@@ -1,0 +1,53 @@
+Dataset file: data\clean\agri_dataset.csv
+Shape (rows, columns): (36664, 14)
+Data rows (header excluded): 36664
+Columns: 14
+Duplicate rows: 0
+Rows >= 15,000: True
+Columns >= 10: True
+Countries: 194 | Crops: 10 | Years: 1990-2022
+
+Dtypes:
+record_id                    int64
+observation_date    datetime64[ns]
+region                      object
+crop                        object
+rainfall_mm                float64
+temperature_c              float64
+humidity_pct               float64
+soil_moisture              float64
+yield_kg                   float64
+plot_area_ha               float64
+country                     object
+iso3                        object
+year                         int64
+yield_kg_ha                float64
+
+Missing values:
+record_id           0
+observation_date    0
+region              0
+crop                0
+rainfall_mm         0
+temperature_c       0
+humidity_pct        0
+soil_moisture       0
+yield_kg            0
+plot_area_ha        0
+country             0
+iso3                0
+year                0
+yield_kg_ha         0
+
+Summary:
+                    count                           mean                  min                  25%                  50%                  75%                  max                 std
+record_id         36664.0                        18332.5                  1.0              9166.75              18332.5             27498.25              36664.0        10584.129471
+observation_date    36664  2006-03-27 20:55:21.928867712  1990-01-01 00:00:00  1998-01-01 00:00:00  2006-01-01 00:00:00  2014-01-01 00:00:00  2022-01-01 00:00:00                 NaN
+rainfall_mm       36664.0                     954.706168                  0.0               426.43               841.65               1333.5              6989.04          718.162717
+temperature_c     36664.0                      19.304033               -8.023               12.224               22.466               25.829               30.497            7.996698
+humidity_pct      36664.0                      66.448561               18.284               57.855               71.375               79.164               95.175           17.346567
+soil_moisture     36664.0                       0.558416                 0.09                0.455                0.564                 0.68                 0.99            0.172326
+yield_kg          36664.0              2883229039.932904                200.0            8666750.0          116399350.0          873057750.0       412262180000.0  15135745725.164213
+plot_area_ha      36664.0                  722597.452297                  1.0               2700.0              35278.0             213692.5           46449121.0      3123005.328635
+year              36664.0                    2006.235435               1990.0               1998.0               2006.0               2014.0               2022.0            9.447399
+yield_kg_ha       36664.0                    6239.850433                 0.13             1478.555              3061.91            7785.0975            102655.51         7720.925617
