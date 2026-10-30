@@ -34,10 +34,10 @@ Built by `build_dataset.py` from two open sources:
 
 | | |
 |---|---|
-| Rows | 36,664 (needs 15,000) |
-| Columns | 14 (needs 10) |
+| Rows | 36,664 |
+| Columns | 14 |
 | Coverage | 194 countries, 22 regions, 10 crops, 1990-2022 |
-| Duplicates / missing | 0 / 0 |
+| Duplicates / missing | 0 / 0 | (Data has been cleaned)
 
 **Columns:** `record_id`, `observation_date`, `region`, `crop`, `rainfall_mm`, `temperature_c`, `humidity_pct`, `soil_moisture`, `yield_kg`, `plot_area_ha`, `country`, `iso3`, `year`, `yield_kg_ha`
 
