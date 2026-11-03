@@ -29,15 +29,27 @@ Smallholder farmers, agricultural extension officers, policymakers and county pl
 
 ## Dataset
 Built by `build_dataset.py` from two open sources:
-- **FAOSTAT:** crop production and area harvested
+- **FAOSTAT:** crop production and area harvested (details below)
 - **NASA POWER:** rainfall, temperature, humidity and soil moisture (country centroid, annual)
 
 | | |
 |---|---|
-| Rows | 36,664 |
-| Columns | 14 |
+| Rows | 36,664 (needs 15,000) |
+| Columns | 14 (needs 10) |
 | Coverage | 194 countries, 22 regions, 10 crops, 1990-2022 |
-| Duplicates / missing | 0 / 0 | (Data has been cleaned)
+| Duplicates / missing | 0 / 0 |
+
+**FAOSTAT source**
+
+| | |
+|---|---|
+| Dataset | Crops and Livestock products |
+| Creator | FAO (Food and Agriculture Organization of the United Nations) |
+| Licence | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| URL | https://www.fao.org/faostat/en/#data/QCL |
+| Years available | 1961-2024 |
+| Years used | 1990-2022 (shortened so the dataset is small enough to upload to GitHub) |
+| Accessed | 28/10/2026 |
 
 **Columns:** `record_id`, `observation_date`, `region`, `crop`, `rainfall_mm`, `temperature_c`, `humidity_pct`, `soil_moisture`, `yield_kg`, `plot_area_ha`, `country`, `iso3`, `year`, `yield_kg_ha`
 
