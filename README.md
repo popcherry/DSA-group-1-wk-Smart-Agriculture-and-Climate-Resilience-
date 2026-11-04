@@ -51,6 +51,20 @@ Built by `build_dataset.py` from two open sources:
 | Years used | 1990-2022 (shortened so the dataset is small enough to upload to GitHub) |
 | Accessed | 28/10/2026 |
 
+**NASA POWER source**
+
+| | |
+|---|---|
+| Dataset | NASA POWER (Prediction Of Worldwide Energy Resources), monthly point data, agroclimatology (AG) community |
+| Creator | NASA Langley Research Center, POWER Project (funded through the NASA Earth Science Division) |
+| Licence | No restrictions on use; citation requested (not a Creative Commons licence) |
+| URL | https://power.larc.nasa.gov |
+| Years available | 1981 to near real time (meteorology data) |
+| Years used | 1990-2022 |
+| Parameters used | PRECTOTCORR (rainfall), T2M (temperature), RH2M (humidity), GWETROOT (soil moisture) |
+| Spatial resolution | About 0.5° x 0.625° grid cells, read at one point per country centroid |
+| Accessed | 28/10/2026 |
+
 **Columns:** `record_id`, `observation_date`, `region`, `crop`, `rainfall_mm`, `temperature_c`, `humidity_pct`, `soil_moisture`, `yield_kg`, `plot_area_ha`, `country`, `iso3`, `year`, `yield_kg_ha`
 
 **Crops:** Maize, Wheat, Rice, Potatoes, Soybeans, Sorghum, Cassava, Sweet potatoes, Barley, Millet
@@ -59,6 +73,7 @@ Built by `build_dataset.py` from two open sources:
 - Data is country-level and annual, not farm-level. Climate is taken at one point per country.
 - `observation_date` is 1 January of each year, so there is no real monthly or growing-season timing.
 - Some extreme yields (e.g. Guyana sweet potatoes) will be flagged in Week 3, not deleted.
+- NASA POWER values are model-based estimates on a coarse grid (about 0.5° x 0.625°), not weather-station measurements.
 
 ## Folder Structure
 ```
