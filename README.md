@@ -6,8 +6,7 @@ A reproducible Python/Pandas/Matplotlib investigation of which crops and countri
 
 ## Team
 
-| Member | Role |
-|---|---|
+| Member | 
 | Chemi Azikiwe |
 | Kayla Amani | 
 | Elisha Juma | 
