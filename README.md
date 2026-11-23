@@ -8,7 +8,7 @@ A reproducible Python, Pandas and Matplotlib investigation of which crops and re
 
 | Member | Role | Main contribution |
 | --- | --- | --- |
-| Kayla Amani | Week 1 lead | Project scope, dataset selection, repository setup, `01_foundations.ipynb` and the 15,000-row / 10-column proof |
+| Kaylah Amani | Week 1 lead | Project scope, dataset selection, repository setup, `01_foundations.ipynb` and the 15,000-row / 10-column proof |
 | Chemi Azikiwe | Week 2 and Week 5 lead | `02_exploration.ipynb`, data dictionary and quality audit; final README, report, slides and reproducibility run |
 | Ruvarashe Mandima | Week 2 and Week 5 lead | `02_exploration.ipynb`, data dictionary and quality audit; file organisation, final README, report, slides and reproducibility run |
 | Mike Gichimu | Week 3 lead | `03_cleaning_analysis.ipynb`, processed dataset, cleaning log and the five analytical questions |
