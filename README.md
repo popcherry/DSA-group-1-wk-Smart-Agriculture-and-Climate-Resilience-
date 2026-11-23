@@ -92,7 +92,7 @@ Full conclusions and recommendations are in `docs/findings_summary.md`.
 ├── visuals/          # 01_ to 05_ exported PNG charts (Week 4)
 ├── report/           # final_report.pdf
 ├── presentation/     # final_slides.pdf or .pptx
-└── docs/             # data_dictionary.md, cleaning_log.md, findings_summary.md, merge_report.txt
+└── docs/             # data_dictionary.md, cleaning_log.md, findings_summary.md
 ```
 
 ## How to run
@@ -117,7 +117,7 @@ If PowerShell blocks the activate script, run `Set-ExecutionPolicy -Scope Curren
 ```
 python build_merged_dataset.py
 ```
-This writes `data/raw/agri_merged_raw.csv` and `docs/merge_report.txt`.
+This writes `data/raw/agri_merged_raw.csv` and prints a summary of each merge step.
 
 **3. Run the notebooks in order**
 
