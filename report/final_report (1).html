@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smart Agriculture and Climate Resilience: Final Report</title>
+<style>
+  @page { size: A4; margin: 20mm 19mm 18mm 19mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "DejaVu Serif", Georgia, serif; font-size: 10.4pt; line-height: 1.42; color: #1b1b1b; margin: 0; }
+  h1, h2, h3, .sans, table, figcaption, .meta { font-family: "DejaVu Sans", Arial, sans-serif; }
+  h1 { font-size: 19pt; margin: 0 0 4pt; color: #17405c; line-height: 1.2; }
+  .subtitle { font-size: 11.5pt; color: #444; margin: 0 0 10pt; font-family: "DejaVu Sans", Arial, sans-serif; }
+  h2 { font-size: 12.5pt; color: #17405c; margin: 13pt 0 4pt; border-bottom: 1px solid #c9d6df; padding-bottom: 2pt; break-after: avoid; }
+  h3 { font-size: 10.6pt; margin: 9pt 0 3pt; color: #222; break-after: avoid; }
+  p { margin: 0 0 6pt; text-align: justify; }
+  ul, ol { margin: 0 0 6pt; padding-left: 16pt; }
+  li { margin-bottom: 2pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 3pt 0 8pt; break-inside: avoid; }
+  th, td { border: 1px solid #c9d6df; padding: 2.5pt 5pt; text-align: left; vertical-align: top; }
+  th { background: #e9f0f5; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  .meta { font-size: 9pt; }
+  .meta td { border: none; padding: 1pt 8pt 1pt 0; }
+  .box { border: 1px solid #c9d6df; background: #f5f8fa; padding: 6pt 9pt; margin: 6pt 0 8pt; font-size: 9.8pt; }
+  figure { margin: 6pt 0 8pt; break-inside: avoid; }
+  figure img { width: 100%; display: block; border: 1px solid #e2e8ec; }
+  figure.half { width: 74%; margin-left: auto; margin-right: auto; }
+  figcaption { font-size: 8.6pt; color: #333; margin-top: 3pt; line-height: 1.35; text-align: justify; }
+  .figrow { display: flex; gap: 10pt; break-inside: avoid; }
+  .figrow figure { flex: 1; margin-top: 4pt; }
+  .refs p { padding-left: 16pt; text-indent: -16pt; font-size: 9.4pt; text-align: left; margin-bottom: 4pt; }
+  code { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt; background: #f1f3f4; padding: 0 2px; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<h1>Smart Agriculture and Climate Resilience</h1>
+<p class="subtitle">Crop yields across crops, regions and time, and how far rainfall and temperature explain them (FAOSTAT and Kaggle climate data, 1990 to 2013)</p>
+
+<table class="meta">
+  <tr><td><b>Course</b></td><td>DSA 1080A Programming for Data Science, Future Data Lab, Project 03</td></tr>
+  <tr><td><b>Group</b></td><td>Group 2</td></tr>
+  <tr><td><b>Members</b></td><td>Kaylah Amani 202608492 · Chemi Azikiwe 678189 · Ruvarashe Mandima 677482 · Mike Gichimu 202600181 · Elisha Juma 202607356</td></tr>
+  <tr><td><b>Repository</b></td><td><a href="https://github.com/popcherry/DSA-group-1-wk-Smart-Agriculture-and-Climate-Resilience-">https://github.com/popcherry/DSA-group-1-wk-Smart-Agriculture-and-Climate-Resilience-</a>, final commit tagged <code>v1.0</code></td></tr>
+</table>
+
+<div class="box">
+<b>Summary.</b> We merged FAOSTAT crop statistics with a Kaggle climate table into one dataset of 25,432 country-crop-year records (204 countries, 10 crops, 1990 to 2013) and kept every row through cleaning. Root crops give the highest weight per hectare (potatoes, median 15,224 kg/ha). Median maize yield across countries rose about 89% between 1990 and 2013, while Kenya's median maize yield barely changed between 1990–2001 and 2002–2013 (1,664 to 1,666 kg/ha). Western Europe's median maize yield is about six times Eastern Africa's. Maize, rice and wheat make up 66.8% of recorded production. National annual rainfall shows almost no relationship with maize yield (Spearman ρ ≈ −0.08), so better-targeted climate data is needed before drawing climate-resilience conclusions.
+</div>
+
+<h2>1. Background</h2>
+<p>Food security depends on how much food each hectare of farmland produces, and on how well that output holds up as rainfall and temperature change. Yield per hectare is the most common practical indicator of farm performance, and it varies widely between crops, countries and years. Understanding where yields are low, which crops carry most of the world's production, and whether simple climate measures explain yield differences helps decide where support for farmers and better data collection would matter most.</p>
+<p>This project is a reproducible data investigation, not a predictive model. It uses Python, Pandas and Matplotlib to describe patterns in public crop and climate records. The intended users are students, agricultural planners and NGOs who need a clear, evidence-based summary of yield patterns, with Kenya used as a local case study.</p>
+
+<h2>2. Objectives and research questions</h2>
+<p><b>Overall objective:</b> understand how crop yield varies across crops, regions and time, and how far climate variables help explain that variation.</p>
+<p><b>Specific objectives:</b> (1) compare median yield across the 10 crops and across UN regions; (2) show how yields changed between 1990 and 2013; (3) measure how rainfall and temperature relate to yield, and show where climate data coverage is weak.</p>
+<table>
+  <tr><th style="width:4%">#</th><th>Research question</th><th style="width:26%">Answered in</th></tr>
+  <tr><td>1</td><td>Which crops had the highest median yield per hectare?</td><td>Notebook 03 Q1, Figure 1</td></tr>
+  <tr><td>2</td><td>How did median maize yield vary across regions?</td><td>Notebook 03 Q2, Figure 3</td></tr>
+  <tr><td>3</td><td>How did recorded rainfall vary across regions, and does rainfall relate to maize yield?</td><td>Notebook 03 Q3, Figure 5</td></tr>
+  <tr><td>4</td><td>How did yields change over time, globally and for maize in Kenya (1990–2001 vs 2002–2013)?</td><td>Notebook 03 Q4, Figure 2</td></tr>
+  <tr><td>5</td><td>How did Kenya's maize yield differ between cooler and warmer years?</td><td>Notebook 03 Q5</td></tr>
+  <tr><td>6</td><td>Which crops make up most of recorded production?</td><td>Figure 4</td></tr>
+</table>
+
+<h2>3. Dataset and ethics</h2>
+<h3>3.1 Sources</h3>
+<table>
+  <tr><th>Source</th><th>Provides</th><th>Licence</th></tr>
+  <tr><td>FAOSTAT, Crops and Livestock Products (QCL), Food and Agriculture Organization of the United Nations. Accessed 28/10/2026.</td><td><code>plot_area_ha</code>, <code>production_tonnes</code>, <code>yield_kg_ha</code></td><td>CC BY 4.0</td></tr>
+  <tr><td>Crop Yield Prediction Dataset (<code>yield_df.csv</code>), Kaggle (patelris). Accessed 13/11/2026.</td><td><code>rainfall_mm</code>, <code>pesticides_tonnes</code>, <code>temperature_c</code>, <code>yield_hg_ha</code></td><td>As stated on the Kaggle dataset page</td></tr>
+</table>
+<p>FAOSTAT is the base table, with one row per country, crop and year. The Kaggle file repeats each country-crop-year up to 22 times (only the temperature changes), so the merge script <code>build_merged_dataset.py</code> first collapses it to one row per country-crop-year. This stops repeated rows from inflating the size of the dataset. Crop and country names are then aligned between the sources, and the climate table is left-joined onto FAOSTAT. Countries the Kaggle file does not cover keep their FAOSTAT row with genuine blanks in the climate columns. No rows were copied or invented.</p>
+<h3>3.2 Size validation</h3>
+<p>Loading the merged file with Pandas and checking <code>df.shape</code> gives <b>25,432 rows × 14 columns</b>, above the required 15,000 × 10. The data covers 204 countries in 26 UN sub-regions, 10 crops and 24 years (1990 to 2013), with 0 duplicate rows and 0 repeated country-crop-year keys. The 14 columns are <code>record_id</code>, <code>observation_date</code>, <code>year</code>, <code>country</code>, <code>iso3</code>, <code>region</code>, <code>crop</code>, <code>plot_area_ha</code>, <code>production_tonnes</code>, <code>yield_kg_ha</code>, <code>yield_hg_ha</code>, <code>rainfall_mm</code>, <code>pesticides_tonnes</code> and <code>temperature_c</code>. Each is described in <code>docs/data_dictionary.md</code>.</p>
+<h3>3.3 Ethics and responsible use</h3>
+<ul>
+  <li><b>Lawful, open data.</b> FAOSTAT is published under CC BY 4.0 and is cited below. The Kaggle file is publicly shared for reuse, and its source is cited.</li>
+  <li><b>No personal data.</b> Every record is a national aggregate for a country, crop and year. There are no farmers, households or other individuals in the data.</li>
+  <li><b>No fabricated values.</b> Missing climate readings were left blank rather than filled, and unusual values were flagged rather than deleted, so no pattern in this report comes from invented data.</li>
+  <li><b>Honest scope.</b> All results describe associations in reported statistics. They do not show what causes yield differences.</li>
+  <li><b>Coding assistance.</b> In line with the brief's academic integrity rules, we declare that coding assistance, including an AI assistant, was used to help build the merge script, review files against the brief and draft documentation, including this report. Every team member has reviewed the code and results and can explain them.</li>
+</ul>
+
+<h2>4. Methods</h2>
+<p>The analysis runs in four numbered notebooks that use relative paths, so a reader can restart the kernel and run all of them in order (setup steps are in the README):</p>
+<ol>
+  <li><b><code>01_foundations.ipynb</code></b> uses Python fundamentals (variables, a list, a dictionary, a loop, a conditional and two small functions) on project examples and proves the 15,000 × 10 size requirement with <code>df.shape</code>, <code>df.columns</code> and <code>df.head()</code>.</li>
+  <li><b><code>02_exploration.ipynb</code></b> profiles the raw data with <code>head()</code>, <code>tail()</code>, <code>info()</code>, <code>dtypes</code> and <code>describe()</code>, builds the data dictionary and a quality audit table, and defines two reusable functions, <code>validate_columns()</code> and <code>summarize_missingness()</code>.</li>
+  <li><b><code>03_cleaning_analysis.ipynb</code></b> cleans a copy of the raw data, saves <code>data/processed/agri_cleaned.csv</code> and answers five questions using filtering, <code>groupby()</code>, <code>value_counts()</code>, aggregation (count, mean, median, min, max) and date-based period comparisons.</li>
+  <li><b><code>04_visualization.ipynb</code></b> reads the processed file and exports five Matplotlib charts to <code>visuals/</code>.</li>
+</ol>
+<p>We report <b>medians</b> rather than means because yields are strongly right-skewed. In the raw data the mean yield is 6,874 kg/ha against a median of 3,955 kg/ha. Yield questions use only rows with a positive harvested area and a recorded yield. Climate questions drop blank climate rows only inside the question that needs them. Regional maize medians are shown only for regions with at least 20 records. For rainfall, which repeats across crop and year rows in the source, each country is counted once per region so that it gets equal weight. The rainfall and yield relationship is measured with a Spearman rank correlation, which suits skewed data and does not assume a straight line.</p>
+
+<h2>5. Data cleaning</h2>
+<p>The Week 2 audit found no duplicates, no negative values, no spacing or casing problems in the text columns and no unparseable dates. It did find large, structured gaps in the climate columns, zero-area rows and historical country entities. Cleaning was designed to keep every row and to mark problems rather than remove them.</p>
+<table>
+  <tr><th>Issue</th><th class="n">Rows affected</th><th>Decision and reason</th></tr>
+  <tr><td>Missing <code>rainfall_mm</code>, <code>temperature_c</code>, <code>pesticides_tonnes</code>, <code>yield_hg_ha</code></td><td class="n">12,328 each (48.5%)</td><td>Retained as blank and marked with <code>has_weather</code>. The Kaggle table covers only 101 countries. Filling would invent readings, and dropping every incomplete row would leave about 13,100 rows, below the 15,000 minimum.</td></tr>
+  <tr><td>Missing <code>yield_kg_ha</code></td><td class="n">213 (0.8%)</td><td>Retained as blank and marked with <code>valid_yield</code>. 212 of these rows have zero production, so no yield can be calculated.</td></tr>
+  <tr><td>Missing <code>plot_area_ha</code></td><td class="n">2</td><td>Retained. Too few to matter, and yield questions already require a positive area.</td></tr>
+  <tr><td>Historical labels in <code>iso3</code> (e.g. USSR, Serbia and Montenegro)</td><td class="n">134</td><td>Set to blank because they are not three-letter codes. The country name stays in <code>country</code>.</td></tr>
+  <tr><td>Text spacing, dates, duplicates, negatives</td><td class="n">0 changes</td><td>Text trimmed (0 cells changed). <code>observation_date</code> converted to a date type, with 0 date-year mismatches. 0 duplicate keys and 0 negative values.</td></tr>
+  <tr><td>Data that needs review</td><td class="n">32 / 712 / 346</td><td>Flags added for zero area with positive production (32), a gap of more than 1% between the two yield sources (712, about 5% of matched rows) and former states (346).</td></tr>
+  <tr><td>Outliers (1.5 × IQR rule)</td><td class="n">1,012 / 3,724 / 1,916 / 207</td><td>Yield, production, pesticide and rainfall outliers flagged and kept. Yield and production were checked within each crop, because crops differ naturally in scale.</td></tr>
+</table>
+<p>We also added <code>yield_t_ha</code> (tonnes per hectare) and <code>period</code> (four six-year groups). With the five review flags and four outlier flags, the dataset grew from 14 to 25 columns.</p>
+<table>
+  <tr><th>Measure</th><th class="n">Before</th><th class="n">After</th></tr>
+  <tr><td>Rows</td><td class="n">25,432</td><td class="n">25,432 (100% retained)</td></tr>
+  <tr><td>Columns</td><td class="n">14</td><td class="n">25</td></tr>
+  <tr><td>Missing cells in the original 14 columns</td><td class="n">49,527</td><td class="n">49,661 (+134 from <code>iso3</code>)</td></tr>
+  <tr><td>Duplicate rows / repeated country-crop-year keys</td><td class="n">0 / 0</td><td class="n">0 / 0</td></tr>
+  <tr><td>Rows with climate data</td><td class="n">13,104</td><td class="n">13,104</td></tr>
+</table>
+<p>The cleaned file passes the size check at 25,432 rows × 25 columns. The full log is in <code>docs/cleaning_log.md</code>.</p>
+
+<h2>6. Results</h2>
+<h3>Q1. Which crops had the highest median yield per hectare?</h3>
+<table>
+  <tr><th>Crop</th><th class="n">Records</th><th class="n">Median (kg/ha)</th><th class="n">Mean (kg/ha)</th><th>Crop</th><th class="n">Records</th><th class="n">Median (kg/ha)</th><th class="n">Mean (kg/ha)</th></tr>
+  <tr><td>Potatoes</td><td class="n">3,634</td><td class="n">15,224</td><td class="n">17,191</td><td>Rice</td><td class="n">2,753</td><td class="n">3,065</td><td class="n">3,396</td></tr>
+  <tr><td>Cassava, fresh</td><td class="n">2,345</td><td class="n">9,612</td><td class="n">10,254</td><td>Wheat</td><td class="n">2,909</td><td class="n">2,313</td><td class="n">2,820</td></tr>
+  <tr><td>Plantains</td><td class="n">1,147</td><td class="n">8,156</td><td class="n">9,991</td><td>Maize (corn)</td><td class="n">3,804</td><td class="n">2,273</td><td class="n">3,623</td></tr>
+  <tr><td>Yams</td><td class="n">1,304</td><td class="n">7,659</td><td class="n">8,483</td><td>Soya beans</td><td class="n">2,154</td><td class="n">1,467</td><td class="n">1,540</td></tr>
+  <tr><td>Sweet potatoes</td><td class="n">2,636</td><td class="n">7,557</td><td class="n">9,362</td><td>Sorghum</td><td class="n">2,502</td><td class="n">1,249</td><td class="n">1,942</td></tr>
+</table>
+<p>Root and tuber crops lead: potatoes have a median of 15,224 kg/ha, about twelve times sorghum's 1,249 kg/ha. All five root and fruit crops rank above every grain and pulse. Much of this gap reflects water content, since a kilogram of fresh potato carries far less dry food than a kilogram of grain, so yields should be compared within similar crop types. For maize, the mean (3,623) is well above the median (2,273), which shows a long tail of high-yield countries.</p>
+
+<h3>Q2. How did median maize yield vary across regions?</h3>
+<table>
+  <tr><th>Highest regions</th><th class="n">Median (kg/ha)</th><th class="n">Records</th><th>Lowest regions</th><th class="n">Median (kg/ha)</th><th class="n">Records</th></tr>
+  <tr><td>Western Europe</td><td class="n">8,983</td><td class="n">148</td><td>Eastern Africa</td><td class="n">1,506</td><td class="n">400</td></tr>
+  <tr><td>Northern America</td><td class="n">8,312</td><td class="n">48</td><td>Micronesia</td><td class="n">1,236</td><td class="n">23</td></tr>
+  <tr><td>Australia and New Zealand</td><td class="n">7,060</td><td class="n">48</td><td>Western Africa</td><td class="n">1,187</td><td class="n">360</td></tr>
+  <tr><td>Southern Europe</td><td class="n">5,814</td><td class="n">224</td><td>Southern Africa</td><td class="n">1,143</td><td class="n">120</td></tr>
+  <tr><td>Eastern Asia</td><td class="n">4,556</td><td class="n">120</td><td>Middle Africa</td><td class="n">906</td><td class="n">192</td></tr>
+</table>
+<p>Regional gaps are large. Western Europe's median maize yield is about six times Eastern Africa's and nearly ten times Middle Africa's. Four of the five lowest regions are in sub-Saharan Africa, where maize is a staple food, so the gap matters most where food security depends on the crop. Regions have very different numbers of countries and records, and these medians pool all years.</p>
+
+<h3>Q3. How did recorded rainfall vary across regions, and does it relate to maize yield?</h3>
+<p>Counting each country once, the wettest regions are Melanesia (3,142 mm, 1 country), South-eastern Asia (2,702 mm, 3) and Central America (1,976 mm, 5). The driest are Northern Africa (148 mm, 6), Western Asia (332 mm, 8) and Southern Africa (456 mm, 4). Eastern Africa's median is 1,180 mm across 11 countries. Several regional medians rest on one to three countries, so they are rough indications. Comparing these figures with Q2 already suggests that rainfall does not line up with yield. Western Europe (857 mm) has far higher maize yields than wetter Eastern Africa. Figure 5 tests this directly: across 2,006 maize records with climate data, the Spearman correlation between annual rainfall and yield is −0.08, which is effectively no relationship.</p>
+
+<h3>Q4. How did yields change over time, globally and for maize in Kenya?</h3>
+<table>
+  <tr><th>Median yield (kg/ha)</th><th class="n">1990</th><th class="n">2013</th><th class="n">Change</th></tr>
+  <tr><td>Maize, median across countries</td><td class="n">1,691</td><td class="n">3,194</td><td class="n">+89%</td></tr>
+  <tr><td>Rice, median across countries</td><td class="n">2,634</td><td class="n">3,753</td><td class="n">+42%</td></tr>
+  <tr><td>Wheat, median across countries</td><td class="n">1,999</td><td class="n">2,760</td><td class="n">+38%</td></tr>
+  <tr><td>Kenya maize, period medians: 1990–2001 (first column) vs 2002–2013 (second column), 12 years each</td><td class="n">1,664</td><td class="n">1,666</td><td class="n">+2 kg/ha</td></tr>
+</table>
+<p>All three staples ended higher in 2013 than in 1990, with maize improving most. Kenya stands out: its median maize yield barely moved between the two periods (1,664.40 to 1,666.35 kg/ha). While the typical country nearly doubled its maize yield, Kenya's median in both periods was close to the 1990 cross-country median of 1,691 kg/ha. Because Kenya's figures are 12-year medians and the global figures are single-year medians across countries, this is a broad comparison rather than an exact one. The global line is a median across the countries reporting each year, so it is not a single fixed group of countries, and the comparison does not explain why Kenya stalled.</p>
+
+<h3>Q5. How did Kenya's maize yield differ between cooler and warmer years?</h3>
+<table>
+  <tr><th>Kenya, years split at median temperature (16.66 °C)</th><th class="n">Years</th><th class="n">Median maize yield (kg/ha)</th></tr>
+  <tr><td>Cooler (at or below 16.66 °C)</td><td class="n">12</td><td class="n">1,685</td></tr>
+  <tr><td>Warmer (above 16.66 °C)</td><td class="n">11</td><td class="n">1,641</td></tr>
+</table>
+<p>Warmer years had a median yield about 45 kg/ha (roughly 3%) lower than cooler years. The difference is small and rests on only 23 years of national averages, so it is consistent with mild heat stress but does not prove it. Rainfall, inputs, prices and policy also changed over the period, so temperature cannot be separated from these other factors with this data.</p>
+
+<h2>7. Visualizations</h2>
+<p>All five charts were made with Matplotlib in <code>04_visualization.ipynb</code> using one shared style and exported as 200 dpi PNG files to <code>visuals/</code>.</p>
+
+<div class="figrow">
+<figure>
+  <img src="../visuals/01_median_yield_by_crop.png" alt="Horizontal bar chart of median yield by crop">
+  <figcaption><b>Figure 1. Median yield by crop (bar chart).</b> Potatoes lead at 15,224 kg/ha, and sorghum (1,249) and soya beans (1,467) are lowest. Root crops yield far more weight per hectare than grains. High kg/ha does not mean more nutrition or value, so compare like with like. Medians pool countries and years, and each crop is grown in a different set of countries.</figcaption>
+</figure>
+<figure>
+  <img src="../visuals/02_staple_yield_trend.png" alt="Line chart of maize, rice and wheat median yield from 1990 to 2013">
+  <figcaption><b>Figure 2. Staple yields over time (line chart).</b> Maize rose about 89%, rice 42% and wheat 38% between 1990 and 2013, with rice and wheat fairly flat until the late 1990s. More food from the same land supports food security. The set of reporting countries changes slightly each year, and the chart shows the trend, not its causes.</figcaption>
+</figure>
+</div>
+
+<div class="figrow">
+<figure>
+  <img src="../visuals/03_maize_yield_histogram.png" alt="Histogram of maize yields in tonnes per hectare">
+  <figcaption><b>Figure 3. Distribution of maize yields (histogram).</b> Most records sit at low yields (median 2.27 t/ha) with a long right tail up to 36.8 t/ha, which pulls the mean up to 3.6 t/ha. This is why we report medians. Each bar counts country-year records, and the tail includes outliers that were flagged but kept.</figcaption>
+</figure>
+<figure>
+  <img src="../visuals/04_production_share_by_crop.png" alt="Horizontal bar chart of share of total production by crop">
+  <figcaption><b>Figure 4. Share of production by crop (horizontal bar).</b> Maize (23.8%), rice (21.5%) and wheat (21.5%) make up 66.8% of recorded tonnage. Plantains and yams are each under 2%. A horizontal bar replaces a pie chart because ten slices with several tiny shares are hard to compare. Shares are by weight, not calories or value.</figcaption>
+</figure>
+</div>
+
+<figure class="half">
+  <img src="../visuals/05_rainfall_vs_maize_yield.png" alt="Scatter plot of annual rainfall against maize yield">
+  <figcaption><b>Figure 5. Rainfall against maize yield (scatter plot).</b> The 2,006 points form a broad cloud with no clear trend (Spearman ρ = −0.08), so higher national rainfall does not predict higher maize yield. Rainfall is one national average per country, so each vertical stripe is one country across years, and seasonal and local differences are hidden. Irrigation, soil and inputs also vary, and about half the countries have no climate data.</figcaption>
+</figure>
+
+<h2>8. Recommendations</h2>
+<ol>
+  <li><b>Prioritise yield improvement for maize, rice and wheat, especially maize in sub-Saharan Africa.</b> These three crops carry two thirds of recorded production, so gains here move total output most. Eastern Africa's median maize yield (1,506 kg/ha) is a sixth of Western Europe's, and Kenya's median maize yield barely changed between 1990–2001 and 2002–2013, while the median across countries rose about 89%. Programmes on seed, soil fertility and farmer support in this region therefore have the most room to raise output.</li>
+  <li><b>Do not use national annual rainfall as a stand-alone yield predictor, and collect better climate data.</b> Rainfall showed no meaningful relationship with maize yield, and climate values exist for only 101 of 204 countries as one national average each. Climate-resilience planning needs seasonal and sub-national rainfall and temperature data, together with irrigation and input records, before it can link climate to farm performance.</li>
+  <li><b>Report medians and compare crops like with like.</b> Yields are highly skewed and differ in scale between crops. Agencies summarising yield data should use medians, compare crops within groups (grains with grains, roots with roots) and treat flagged outliers and source mismatches with care.</li>
+</ol>
+
+<h2>9. Limitations</h2>
+<ul>
+  <li><b>Climate coverage is incomplete.</b> 48.5% of rows have no climate data, so the climate findings cover only 101 countries and may not represent the rest.</li>
+  <li><b>Coarse climate measures.</b> Rainfall and temperature are annual, national averages. They cannot capture growing-season timing, droughts or differences inside large countries, which may be why no rainfall relationship appears. Climate coverage also stops at 2013.</li>
+  <li><b>Reported statistics.</b> FAOSTAT yields come from national reporting, and some values are estimated or imputed. In 712 rows the two sources' yields differ by more than 1%. These rows are flagged.</li>
+  <li><b>Changing country set.</b> Medians across countries mix different countries in different years, and former states (such as the USSR) appear before their break-up.</li>
+  <li><b>Small samples for Kenya.</b> Q4 and Q5 rest on 23 to 24 annual records, so small differences are not reliable.</li>
+  <li><b>Weight-based measures and association only.</b> Yields and production shares are in kilograms and tonnes, not calories or value. All findings describe associations, not causes.</li>
+</ul>
+
+<h2>10. Team contributions</h2>
+<table>
+  <tr><th>Member</th><th>Role</th><th>Main contribution</th></tr>
+  <tr><td>Kaylah Amani</td><td>Week 1 lead</td><td>Project scope, dataset selection, repository setup, <code>01_foundations.ipynb</code> and the 15,000-row / 10-column proof</td></tr>
+  <tr><td>Chemi Azikiwe</td><td>Week 2 and Week 5 lead</td><td><code>02_exploration.ipynb</code>, data dictionary and quality audit; final README, report, slides and reproducibility run</td></tr>
+  <tr><td>Ruvarashe Mandima</td><td>Week 2 and Week 5 lead</td><td><code>02_exploration.ipynb</code>, data dictionary and quality audit; file organisation, final README, report, slides and reproducibility run</td></tr>
+  <tr><td>Mike Gichimu</td><td>Week 3 lead</td><td><code>03_cleaning_analysis.ipynb</code>, processed dataset, cleaning log and the five analytical questions</td></tr>
+  <tr><td>Elisha Juma</td><td>Week 4 lead</td><td><code>04_visualization.ipynb</code>, the five exported charts and the findings summary</td></tr>
+</table>
+
+<h2>11. References</h2>
+<div class="refs">
+<p>FAO. 2026. <i>FAOSTAT: Crops and Livestock Products (QCL).</i> Rome: Food and Agriculture Organization of the United Nations. https://www.fao.org/faostat/en/#data/QCL. Licence: CC BY 4.0. Accessed 28 October 2026.</p>
+<p>patelris. n.d. <i>Crop Yield Prediction Dataset</i> (<code>yield_df.csv</code>). Kaggle. https://www.kaggle.com/datasets/patelris/crop-yield-prediction-dataset. Accessed 13 November 2026.</p>
+<p>Hunter, J. D. 2007. Matplotlib: A 2D graphics environment. <i>Computing in Science &amp; Engineering</i>, 9(3), 90–95.</p>
+<p>McKinney, W. 2010. Data structures for statistical computing in Python. <i>Proceedings of the 9th Python in Science Conference</i>, 56–61.</p>
+<p>Stadler, K. 2017. The country converter coco: a Python package for converting country names between different classification schemes. <i>Journal of Open Source Software</i>, 2(16), 332.</p>
+<p>United Nations Statistics Division. <i>Standard Country or Area Codes for Statistical Use (M49).</i> https://unstats.un.org/unsd/methodology/m49/.</p>
+</div>
+
+</body>
+</html>
