@@ -142,7 +142,7 @@ Notebook 04 needs the file that notebook 03 saves, so run 03 first.
 | 2 | Exploration notebook, data dictionary, quality audit | Done |
 | 3 | Cleaning, processed data, cleaning log, five analytical answers | Done |
 | 4 | Five visualizations and findings summary | Done |
-| 5 | Final README, report, slides, final reproducibility run, v1.0 tag | In progress |
+| 5 | Final README, report, slides, final reproducibility run, v1.0 tag | Done |
 
 ## Academic integrity
 
